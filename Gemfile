@@ -16,6 +16,7 @@ gem 'config', '~> 3.1'
 
 gem 'faraday', '~> 1.8'
 gem 'faraday_middleware', '~> 1.2'
+gem 'stripe'
 
 group :test do
   gem 'rspec', '~> 3.10'
