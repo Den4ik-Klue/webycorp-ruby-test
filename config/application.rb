@@ -30,9 +30,9 @@ class Application
 
     # Require application dependencies in the right sequence
     def require_app
+      require_file 'config/initializers/logger'
       require_dir 'app/lib'
       require_dir 'app'
-      require_file 'config/initializers/logger'
       require_dir 'config/initializers'
     end
 
