@@ -16,15 +16,16 @@ class Crawler
   private
 
   def log_request(endpoint)
-    Application.logger.info("Запрос к FakeStoreAPI: #{BASE_URL}#{endpoint}")
+    Application.logger.info("Request to FakeStoreAPI: #{BASE_URL}#{endpoint}")
   end
 
   def handle_response(response)
     if response.success?
+      Application.logger.error("Request successful: #{response.status} - #{response.body}")
       JSON.parse(response.body, symbolize_names: true)
     else
-      Application.logger.error("Ошибка при выполнении запроса: #{response.status} - #{response.body}")
-      nil
+      Application.logger.error("Error executing request: #{response.status} - #{response.body}")
+      []
     end
   end
 end
