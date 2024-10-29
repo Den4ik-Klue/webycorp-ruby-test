@@ -11,7 +11,7 @@ class InvoiceGenerator
                rescue
                  'foo'
                end
-    Stripe.api_key = ENV['STRIPE_SECRET_KEY'] if @api_key == 'foo'
+    Stripe.api_key = @api_key == 'foo' ? ENV['STRIPE_SECRET_KEY'] : @api_key
     @logger = Application.logger
   end
 
