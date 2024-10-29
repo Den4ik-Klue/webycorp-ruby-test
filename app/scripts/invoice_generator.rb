@@ -6,7 +6,8 @@ class InvoiceGenerator
   }.freeze
 
   def initialize
-    Stripe.api_key = Settings.stripe.api_key
+    @api_key = Settings.stripe.api_key
+    Stripe.api_key = ENV['STRIPE_SECRET_KEY'] if @api_key == 'foo'
     @logger = Application.logger
   end
 
@@ -41,7 +42,6 @@ class InvoiceGenerator
   end
 
   def create_invoice_items(products_data, customer)
-    count = 1
     products_data.each do |product_data|
       product_json = Crawler.new.get_json_data((create_api_url(opts: :product, id: product_data[:productId].to_s)))
 
@@ -56,8 +56,6 @@ class InvoiceGenerator
         price: price['id'],
         quantity: product_data[:quantity]
       })
-
-      count += 1
     end
   end
 
