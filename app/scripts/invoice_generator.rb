@@ -6,8 +6,12 @@ class InvoiceGenerator
   }.freeze
 
   def initialize
-    @api_key = Settings.stripe.api_key
-    Stripe.api_key = @api_key == 'foo' ? ENV['STRIPE_SECRET_KEY'] : @api_key
+    @api_key = begin
+                 Settings.stripe.api_key
+               rescue
+                 'foo'
+               end
+    Stripe.api_key = ENV['STRIPE_SECRET_KEY'] if @api_key == 'foo'
     @logger = Application.logger
   end
 
